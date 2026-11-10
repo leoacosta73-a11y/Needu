@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.local
+.env.*
+!.env.example
+*.log
+# Local account/setup notes; the public review guide documents the app.
+GOOGLE-LOGIN.md
+PUBLICACION.md
+ESTADO.md

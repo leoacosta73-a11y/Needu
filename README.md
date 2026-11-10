@@ -25,4 +25,3 @@ npm run dev -- --port 5187
 El esquema SQL ya se aplicó al proyecto de producción; no ejecutarlo otra vez. Para experimentar con datos reales, usar un proyecto Supabase propio y configurar `.env.local` a partir de `.env.example`. No incluir claves privadas en el frontend.
 
 Publicado en Cloudflare Pages, proyecto `needu`, mediante carga directa de `dist/`. Este repositorio no despliega cambios automáticamente.
-
