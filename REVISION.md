@@ -13,12 +13,14 @@ Needu es un MVP de una comunidad de servicios: las personas ofrecen habilidades,
 
 Requiere Node 22 o posterior. Ejecutar `npm install` y `npm run dev -- --port 5187`; abrir http://127.0.0.1:5187/?demo=1. La demo funciona sin variables de entorno.
 
-Para una base propia, copiar `.env.example` a `.env.local` y configurar la URL y clave pública de Supabase. Aplicar `supabase/schema.sql` solamente a un proyecto NUEVO y configurar Auth y sus URLs de retorno. Nunca aplicar el esquema de nuevo sobre la base existente de Needu. No usar claves secretas ni service-role en el frontend. El despliegue existente permite retornar al dominio público, no a un entorno local arbitrario.
+Para una base propia, copiar `.env.example` a `.env.local` y configurar la URL y clave pública de Supabase. Aplicar `supabase/schema.sql` solamente a un proyecto NUEVO, luego `supabase/migrations/001_localities.sql`, y configurar Auth y sus URLs de retorno. Nunca aplicar el esquema de nuevo sobre la base existente de Needu. No usar claves secretas ni service-role en el frontend. El despliegue existente permite retornar al dominio público, no a un entorno local arbitrario.
 
 ## Estructura
 
 - `src/main.jsx`: pantallas, navegación y estado de la aplicación.
 - `src/Login.jsx`: Google OAuth y enlace de correo.
+- `src/identity.js`: datos de Google como valor inicial, sin reemplazar un nombre ya elegido por el usuario. No se infiere edad.
+- `src/LocalityField.jsx` y `src/localities.js`: autocompletado con selección obligatoria de un ID oficial; ver [LOCALIDADES.md](./LOCALIDADES.md).
 - `src/backend.js`: cliente Supabase y consultas.
 - `src/domain.js`: búsqueda, filtros, validación y redondeo de ubicación.
 - `src/data.js`: datos ficticios.
@@ -29,7 +31,7 @@ Para una base propia, copiar `.env.example` a `.env.local` y configurar la URL y
 
 ## Validaciones y límites
 
-`npm test` ejecuta cuatro pruebas de lógica; `npm run build` genera `dist/`. `node tests/connection.mjs` requiere `.env.local` y comprueba proveedores de acceso y bloqueo de lecturas anónimas. No sustituye pruebas completas entre varios usuarios.
+`npm test` ejecuta ocho pruebas de lógica, identidad y localidades; `npm run build` genera `dist/`. `node tests/connection.mjs` requiere `.env.local` y comprueba proveedores de acceso y bloqueo de lecturas anónimas. No sustituye pruebas completas entre varios usuarios.
 
 Los mensajes se consultan cada diez segundos. Los horarios son informativos. Los cruces usan una celda aproximada con consentimiento mutuo y vencimiento de 24 horas: no prueban un encuentro ni muestran recorridos. Los favoritos, perfiles, necesidades y mensajes tienen persistencia para cuentas conectadas.
 
