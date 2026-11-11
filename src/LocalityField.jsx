@@ -1,7 +1,7 @@
 import React, {useEffect, useId, useRef, useState} from 'react';
 import {loadLocalities, searchLocalities} from './localities';
 
-export default function LocalityField({initialId = '', initialLabel = ''}) {
+export default function LocalityField({initialId = '', initialLabel = '', onSelect, label = 'Localidad y provincia'}) {
   const id = useId(), input = useRef(null);
   const [rows, setRows] = useState([]), [query, setQuery] = useState(initialLabel);
   const [selected, setSelected] = useState(null), [open, setOpen] = useState(false);
@@ -15,9 +15,9 @@ export default function LocalityField({initialId = '', initialLabel = ''}) {
   }, [initialId, retry]);
   useEffect(() => {input.current?.setCustomValidity(selected ? '' : 'Elegí una localidad de la lista para continuar.');}, [selected]);
   const results = searchLocalities(rows, query);
-  function choose(row) {setSelected(row); setQuery(row.label); setOpen(false); setActive(-1);}
+  function choose(row) {setSelected(row); onSelect?.(row); setQuery(row.label); setOpen(false); setActive(-1);}
   return <div className="locality-field">
-    <label htmlFor={id}>Localidad y provincia</label>
+    <label htmlFor={id}>{label}</label>
     <input ref={input} id={id} role="combobox" aria-autocomplete="list" aria-expanded={open && !selected} aria-controls={`${id}-list`} aria-activedescendant={active >= 0 && results[active] ? `${id}-${results[active].id}` : undefined} aria-describedby={`${id}-hint`} autoComplete="off" placeholder="Por ejemplo: Pilar, Buenos Aires" required maxLength={180} value={query}
       onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}
       onChange={event => {setQuery(event.target.value); setSelected(null); setOpen(true); setActive(-1);}}
