@@ -4,7 +4,7 @@ React + Vite y Supabase. Plataforma para ofrecer habilidades, encontrar servicio
 
 **[Probar demo sin cuenta](https://needu.patyapps.com/?demo=1)** · **[Abrir sitio](https://needu.patyapps.com/)**
 
-Consultá [REVISION.md](./REVISION.md) para arquitectura, funcionalidades, límites y puntos sugeridos para revisar. Google sigue en modo de prueba; la demo permite explorar el producto sin autorizar una cuenta.
+Consultá [REVISION.md](./REVISION.md) para arquitectura, funcionalidades, límites y puntos sugeridos para revisar. Podés entrar al sitio con Google sin estar en una lista de prueba: Needu solicita únicamente identidad básica (`openid email profile`). La demo permite explorar el producto sin una cuenta.
 
 ## Iniciar
 
