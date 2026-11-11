@@ -16,3 +16,5 @@
 .avatar{overflow:hidden}.avatar>img{display:block;min-width:0;min-height:0;width:100%;height:100%;object-fit:cover}
 
 .draft-avatar{width:80px;height:80px;margin:12px 0;border-radius:50%;overflow:hidden}.draft-avatar img{width:100%;height:100%;object-fit:cover}
+
+.signin-invitation{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px;margin:0 0 24px;border:1px solid #ddcff6;border-radius:18px;background:#f1eaff}.signin-invitation strong{font-size:18px;color:#421e75}.signin-invitation p{font-size:13px;line-height:1.5;margin:8px 0 0;max-width:470px}.signin-invitation button{flex-shrink:0}.main header .header-login{min-height:44px;font-size:13px}@media(max-width:600px){.signin-invitation{display:block;padding:18px}.signin-invitation button{width:100%;margin-top:16px}.signin-invitation strong{font-size:17px}}
