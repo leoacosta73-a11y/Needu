@@ -7,7 +7,7 @@ Needu es un MVP de una comunidad de servicios: las personas ofrecen habilidades,
 - Sitio: https://needu.patyapps.com/
 - Demo sin cuenta: https://needu.patyapps.com/?demo=1
 - La demo usa perfiles ficticios y estado local; no escribe en Supabase. No demuestra conversaciones reales entre cuentas.
-- Google está habilitado y Supabase permite registrar cuentas nuevas. Needu solicita únicamente `openid email profile`. Aunque el proyecto OAuth siga en modo de prueba, estos permisos están exceptuados de la lista de usuarios de prueba: no hace falta agregar cada correo. [Documentación oficial de Google](https://support.google.com/cloud/answer/15549945?hl=en). Las cuentas de organizaciones pueden tener restricciones impuestas por sus administradores. El estado de prueba y la verificación de marca son distintos de esta excepción; no afirmar que el proyecto pasó a producción.
+- Google OAuth está en producción desde el 11/11/2026 y Supabase permite registrar cuentas nuevas. Needu solicita únicamente `openid email profile`; no requiere una lista de correos de prueba. La política de privacidad está publicada en https://needu.patyapps.com/privacidad y vinculada desde la app y Google. No se agregó un logo ni se solicitó verificación de marca en este paso. Las cuentas de organizaciones pueden tener restricciones de sus administradores. Falta comprobar el alta con una cuenta externa nueva.
 
 ## Ejecutar localmente
 
