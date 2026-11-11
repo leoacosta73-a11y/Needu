@@ -35,7 +35,7 @@ Para una base propia, copiar `.env.example` a `.env.local` y configurar la URL y
 
 Los mensajes se consultan cada diez segundos. Los horarios son informativos. Los cruces usan una celda aproximada con consentimiento mutuo y vencimiento de 24 horas: no prueban un encuentro ni muestran recorridos. Los favoritos, perfiles, necesidades y mensajes tienen persistencia para cuentas conectadas.
 
-Todavía no hay mapa real, gestos swipe, subida de fotos, pagos, reseñas, moderación ni app nativa. La comunidad real puede aparecer vacía al iniciar sesión; los ejemplos no se cargan en producción.
+Todavía no hay mapa real, gestos swipe, pagos, reseñas, moderación ni app nativa. La comunidad real puede aparecer vacía al iniciar sesión; los ejemplos no se cargan en producción.
 
 ## Puntos útiles para revisar
 
@@ -49,3 +49,6 @@ El repositorio no incluye contraseñas, secretos OAuth ni la configuración loca
 
 ## Edición de necesidades
 Cada propietario puede editar título, descripción, categoría, localidad y presupuesto de la misma publicación, o eliminarla con confirmación. La migración 002_edit_needs.sql habilita UPDATE por columnas con RLS del propietario; propietario, nombre y fecha no son editables. verify_edit_needs.sql comprueba edición/borrado propio, bloqueo de terceros y localidad canónica con fixtures revertidos. Validado en Supabase y recorrido demo (editar, recargar, cancelar y confirmar borrado).
+
+## Fotos de perfiles y trabajos
+Mi perfil / Ofrezco permite una foto propia y hasta seis fotos de trabajos. src/Media.jsx implementa los controles y src/media.js convierte JPG/PNG/WebP de hasta 10 MB a JPEG de hasta 1600 px y 3 MB. Supabase Storage usa el bucket privado profile-media y enlaces temporales de una hora, renovados mientras la pantalla está abierta. No se comparte automáticamente el avatar de Google con otras cuentas; solo la foto subida por el usuario. La migración 003_profile_media.sql valida rutas por propietario y el máximo de seis fotos. verify_profile_media.sql prueba aislamiento, carpetas propias, lectura autenticada y rechazo de referencias ajenas dentro de una transacción revertida. Para eliminar una cuenta manualmente, borrar primero sus objetos de Storage mediante la API y luego la cuenta; el cascade de perfiles no borra archivos. Si falla la limpieza tras reemplazar/quitar, la app avisa y el archivo pendiente queda sin referencia. Carga y persistencia verificadas en demo local; falta prueba integral de carga contra Storage con una cuenta real de prueba.

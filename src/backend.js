@@ -15,6 +15,7 @@ export const api={
  presence:()=>result(supabase.from('presence').select('consent').maybeSingle()),
  people:()=>result(supabase.from('profiles').select('*')),
  needs:()=>result(supabase.from('needs').select('*').order('created_at',{ascending:false})),
+ profileMedia:(id,values)=>result(supabase.from('profiles').update(values).eq('id',id).select('id').single()),
  profile:p=>result(supabase.from('profiles').upsert(p)),
  need:n=>result(supabase.from('needs').insert(n)),
  updateNeed:(id,owner_id,values)=>result(supabase.from('needs').update(values).eq('id',id).eq('owner_id',owner_id).select('id').single()),
