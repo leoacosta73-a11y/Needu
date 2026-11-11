@@ -13,7 +13,7 @@ Needu es un MVP de una comunidad de servicios: las personas ofrecen habilidades,
 
 Requiere Node 22 o posterior. Ejecutar `npm install` y `npm run dev -- --port 5187`; abrir http://127.0.0.1:5187/?demo=1. La demo funciona sin variables de entorno.
 
-Para una base propia, copiar `.env.example` a `.env.local` y configurar la URL y clave pública de Supabase. Aplicar `supabase/schema.sql` solamente a un proyecto NUEVO, luego `supabase/migrations/001_localities.sql`, y configurar Auth y sus URLs de retorno. Nunca aplicar el esquema de nuevo sobre la base existente de Needu. No usar claves secretas ni service-role en el frontend. El despliegue existente permite retornar al dominio público, no a un entorno local arbitrario.
+Para una base propia, copiar `.env.example` a `.env.local` y configurar la URL y clave pública de Supabase. Aplicar `supabase/schema.sql` solamente a un proyecto NUEVO, luego las migraciones de `supabase/migrations/` en orden, y configurar Auth y sus URLs de retorno. Nunca aplicar el esquema de nuevo sobre la base existente de Needu. No usar claves secretas ni service-role en el frontend. El despliegue existente permite retornar al dominio público, no a un entorno local arbitrario.
 
 ## Estructura
 
@@ -46,3 +46,6 @@ Todavía no hay mapa real, gestos swipe, subida de fotos, pagos, reseñas, moder
 - Requisitos de moderación, privacidad y operación antes de una beta más amplia.
 
 El repositorio no incluye contraseñas, secretos OAuth ni la configuración local de producción. Las propuestas pueden enviarse mediante issues o pull requests; este repositorio no despliega automáticamente a producción.
+
+## Edición de necesidades
+Cada propietario puede editar título, descripción, categoría, localidad y presupuesto de la misma publicación, o eliminarla con confirmación. La migración 002_edit_needs.sql habilita UPDATE por columnas con RLS del propietario; propietario, nombre y fecha no son editables. verify_edit_needs.sql comprueba edición/borrado propio, bloqueo de terceros y localidad canónica con fixtures revertidos. Validado en Supabase y recorrido demo (editar, recargar, cancelar y confirmar borrado).
