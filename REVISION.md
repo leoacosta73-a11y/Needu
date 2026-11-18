@@ -54,3 +54,24 @@ Cada propietario puede editar título, descripción, categoría, localidad y pre
 Mi perfil / Ofrezco permite una foto propia y hasta seis fotos de trabajos. src/Media.jsx implementa los controles y src/media.js convierte JPG/PNG/WebP de hasta 10 MB a JPEG de hasta 1600 px y 3 MB. Supabase Storage usa el bucket privado profile-media y enlaces temporales de una hora, renovados mientras la pantalla está abierta. No se comparte automáticamente el avatar de Google con otras cuentas; solo la foto subida por el usuario. La migración 003_profile_media.sql valida rutas por propietario y el máximo de seis fotos. verify_profile_media.sql prueba aislamiento, carpetas propias, lectura autenticada y rechazo de referencias ajenas dentro de una transacción revertida. Para eliminar una cuenta manualmente, borrar primero sus objetos de Storage mediante la API y luego la cuenta; el cascade de perfiles no borra archivos. Si falla la limpieza tras reemplazar/quitar, la app avisa y el archivo pendiente queda sin referencia. Carga y persistencia verificadas en demo local; falta prueba integral de carga contra Storage con una cuenta real de prueba.
 
 Alta inicial: DraftMedia.jsx permite elegir foto de perfil y trabajos antes de guardar por primera vez. Conserva blobs solo en memoria y muestra previsualizaciones. Guardar perfil valida datos, crea el perfil, sube imágenes y guarda referencias; si falla la subida conserva la selección para reintentar y limpia archivos de ese intento. Recorrido de selección y guardado conjunto probado en demo. No requiere migraciones adicionales.
+
+## Auditoría funcional — 18/11/2026
+
+Resultado: los recorridos ejecutados pasaron, pero no se certifica todavía una prueba integral entre dos cuentas reales ni la entrega de correo de acceso.
+
+- 14 pruebas automáticas de lógica aprobadas y compilación de producción correcta.
+- Conexión al Supabase publicado: Google y email habilitados, registro permitido, lecturas anónimas de perfiles/necesidades/mensajes/presencia/favoritos rechazadas.
+- Ingreso real: cierre de sesión, selección de la cuenta Google ya autorizada y retorno autenticado a needu.patyapps.com correctos. No valida el alta de una cuenta Google nueva.
+- Base real: ejecutados verify.sql, verify_edit_needs.sql, verify_profile_media.sql, verify_chat_roundtrip.sql y verify_signup_publication.sql. Todos PASS. Identidades sintéticas sin credenciales, transacciones revertidas. Verificado envío A→B, lectura de B, respuesta B→A, aislamiento de C, rechazo de mensajes vacíos/excesivos/a sí mismo, favoritos, alta autenticada de perfil/necesidad, disponibilidad, edición/borrado propio, localidad canónica y controles de Storage. No se tocaron conversaciones reales.
+- Interfaz en demo local aislada (puerto 5190): perfil con foto y foto de trabajo, guardado y recarga, disponibilidad, creación/edición/cancelación de borrado/borrado de necesidad, búsqueda sin acentos, guardado de perfiles, apertura de conversación, envío y lectura tras recarga, vista móvil 390×844, alternancia ofertas/necesidades y filtro de distancia. El mensaje de demo no se envió a una persona real.
+- Sin errores de consola en los recorridos comprobados.
+
+Límites pendientes antes de afirmar que todo funciona de extremo a extremo:
+1. Dos cuentas reales de prueba autenticadas en navegadores/dispositivos diferentes: envío, recepción, respuesta y recarga desde la interfaz publicada.
+2. Carga y descarga real de archivos contra Storage desde esas cuentas; las pruebas actuales cubren selección/compresión/persistencia en demo y permisos SQL, no transferencia del archivo al servicio.
+3. Permiso y lectura GPS en un celular físico; están probados la lógica, los errores y la cancelación, no la ubicación real del teléfono.
+4. Entrega y apertura del enlace de ingreso por email.
+
+Observaciones de lanzamiento: el chat se actualiza por consulta cada 10 segundos con la página abierta; no existen notificaciones push ni aviso de mensajes no leídos. El selector de cuenta de Google muestra el dominio técnico del proyecto Supabase; el retorno a Needu funciona, pero conviene mejorar la identificación de marca. La demo no debe confundirse con la comunidad real.
+
+Evidencias locales ignoradas por Git: outputs/audit-supabase.jpg, outputs/audit-alta.jpg y outputs/audit-chat-mobile.jpg. La aplicación publicada no se modificó durante esta auditoría.
