@@ -24,3 +24,5 @@
 
 .current-location-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}.distance-control .location-error{color:#a22a45;background:#fff0f3;padding:12px;border-radius:9px}.location-permission-note{line-height:1.65}@media(max-width:600px){.current-location-actions .outline{width:100%;font-size:12px}}
 .push-settings{display:flex;flex-wrap:wrap;align-items:center;gap:14px;background:#f2edff;border:1px solid #ded3ff;border-radius:18px;padding:20px;margin:0 0 20px}.push-settings>div{flex:1;min-width:200px}.push-settings p{margin:6px 0;color:#65577e;font-size:14px;line-height:1.5}.push-settings>small{width:100%;color:#65577e}.chat-status{font-size:14px;color:#6136b4}.chat-list small{display:block}.messages{overflow-anchor:auto}.bubble{overflow-wrap:anywhere}
+
+.session-controls{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:16px;background:#f4efff;border-radius:14px;margin:16px 0}.session-controls span,.account-email{overflow-wrap:anywhere}.session-controls .outline{white-space:normal;justify-content:center}
