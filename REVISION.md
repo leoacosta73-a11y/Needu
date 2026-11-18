@@ -75,3 +75,12 @@ Límites pendientes antes de afirmar que todo funciona de extremo a extremo:
 Observaciones de lanzamiento: el chat se actualiza por consulta cada 10 segundos con la página abierta; no existen notificaciones push ni aviso de mensajes no leídos. El selector de cuenta de Google muestra el dominio técnico del proyecto Supabase; el retorno a Needu funciona, pero conviene mejorar la identificación de marca. La demo no debe confundirse con la comunidad real.
 
 Evidencias locales ignoradas por Git: outputs/audit-supabase.jpg, outputs/audit-alta.jpg y outputs/audit-chat-mobile.jpg. La aplicación publicada no se modificó durante esta auditoría.
+
+## Actualización 18/11/2026 — chat y avisos
+
+- Implementado: recepción Realtime, recuperación al reconectar, deduplicación, envío inmediato tras confirmación del servidor, prevención de doble envío, contadores locales de no leídos y desplazamiento al último mensaje si no se está leyendo historial.
+- Implementado: suscripción optativa por dispositivo, notificación genérica sin contenido privado, apertura de Mensajes al tocarla y desactivación al cerrar sesión. Manifest y service worker sin caché de páginas ni respuestas autenticadas.
+- Servidor: cola privada, reintentos, descarte de suscripciones vencidas, validación de destinos, claves privadas solo en Supabase y archivos ignorados. Verificación JWT original conservada junto con secreto de webhook.
+- Verificado: 20 pruebas locales y build; SQL transaccional de suscripciones, publicación Realtime, RLS y cola; endpoint real rechaza solicitudes sin JWT o sin secreto y valida la firma de un aviso sin enviarlo. Demo móvil: envío y persistencia tras recarga, sin duplicados.
+- Límite de evidencia: no se ha probado aún una conversación entre dos sesiones reales independientes ni la recepción con la página cerrada en un teléfono físico. La simulación del service worker y las pruebas del servidor no reemplazan esa comprobación.
+- Verificación de publicación: Cloudflare confirmó la implementación; la cuenta real muestra «Chat conectado en tiempo real» y «Activar avisos». La prueba de base de datos → función devolvió HTTP 200 con `signingReady:true`, sin enviar avisos a personas.

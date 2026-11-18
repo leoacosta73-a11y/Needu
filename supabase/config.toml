@@ -1,0 +1,3 @@
+[functions.needu-push]
+# Keep the platform JWT check and the function's private webhook check.
+verify_jwt = true
